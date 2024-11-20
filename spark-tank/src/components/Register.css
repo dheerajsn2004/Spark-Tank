@@ -1,0 +1,82 @@
+.Register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("../images/finance.jpg");
+    color: white;
+  }
+  
+  .Register-content {
+    background: rgba(21, 24, 66, 0.1);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+  }
+  
+  .Register-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Register-form label {
+    margin: 10px 0 5px;
+    font-size: 1.2rem;
+  }
+  
+  .Register-form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .register-btn {
+    padding: 10px 20px;
+    background: #ffd700;
+    color: #1e3c72;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .register-btn:hover {
+    background: #ffea70;
+  }
+  
+  .message {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #30d23b;
+  }
+  
+  .team-box {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: #ffd700;
+  }
+  
+  .team-box h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .team-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .team-box li {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+  
