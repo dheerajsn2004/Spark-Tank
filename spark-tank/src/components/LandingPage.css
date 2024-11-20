@@ -1,0 +1,88 @@
+/* src/components/Hero.css */
+.LandingPage{
+    background-image: url('../images/finance.jpg') no-repeat center center/cover;
+    background-size: cover;
+    background-position: center;                     
+    background-repeat: no-repeat;   
+    height: 100vh;                
+    color: #ffffff;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .LandingPage::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    transform: rotate(30deg);
+    animation: glow 8s linear infinite;
+    z-index: 1;
+  }
+  
+  @keyframes glow {
+    0% {
+      transform: rotate(30deg);
+    }
+    50% {
+      transform: rotate(50deg);
+    }
+    100% {
+      transform: rotate(30deg);
+    }
+  }
+  
+  .LandingPage-content {
+    z-index: 2;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+  
+  .LandingPage h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  
+  .LandingPage p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: #dcdcdc;
+  }
+  
+  .cta-btn {
+    padding: 1rem 2.5rem;
+    background: #ffd700; /* Gold */
+    color: #1e3c72; /* Deep blue */
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .cta-btn:hover {
+    background: #ffea70;
+    box-shadow: 0 10px 25px rgba(255, 234, 112, 0.5);
+    transform: translateY(-5px);
+  }
+  #about{
+    color: #ffffff;
+  }
+  #description{
+    border-radius: 20px;
+    border: 2px solid rgb(8, 8, 67);
+  }
+  #content{
+    color: #ffffff;
+  }
