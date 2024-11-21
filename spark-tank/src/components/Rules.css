@@ -1,0 +1,66 @@
+.Rules {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("../images/finance.jpg");
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+.Rules-content {
+    background: rgba(21, 24, 66, 0.8);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 90%;
+}
+
+.Rules h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ffd700; /* Gold */
+}
+
+.Rules p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.Rules ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.Rules ul li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.navigation-buttons {
+    margin-top: 2rem;
+}
+
+.cta-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background: #ffd700;
+    color: #1e3c72;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+    background: #ffea70;
+    box-shadow: 0 10px 25px rgba(255, 234, 112, 0.5);
+    transform: translateY(-5px);
+}
