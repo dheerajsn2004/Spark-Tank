@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 import './Register.css';
 
 const Register = ({ onRegister }) => {
@@ -7,7 +7,6 @@ const Register = ({ onRegister }) => {
   const [message, setMessage] = useState('');
   const [selectedTeam, setSelectedTeam] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
   const teamCredentials = {
     'Team 1': 'pass123',
@@ -20,8 +19,7 @@ const Register = ({ onRegister }) => {
     if (teamCredentials[selectedTeam] === password) {
       setTeamStates((prev) => ({ ...prev, [selectedTeam]: true }));
       setMessage(`Registration successful for ${selectedTeam}!`);
-      onRegister();  // Update the global registration state in App.js
-      navigate('/rules');  // Automatically navigate to /rules after successful registration
+      onRegister();  // Update registration state in App.js
     } else {
       setMessage('Invalid team number or password. Please try again.');
     }
@@ -32,6 +30,7 @@ const Register = ({ onRegister }) => {
   return (
     <div className="Register">
       <h1>Register for Spark Tank</h1>
+      
       <div className="team-boxes">
         {Object.keys(teamCredentials).map((team) => (
           <div key={team} className="team-box">
@@ -57,6 +56,9 @@ const Register = ({ onRegister }) => {
         ))}
       </div>
       {message && <p className={message.includes('successful') ? 'success-message' : 'message'}>{message}</p>}
+      
+      {/* Allow navigation back to LandingPage */}
+      <Link to="/" className="back-link">Back to Landing Page</Link>
     </div>
   );
 };

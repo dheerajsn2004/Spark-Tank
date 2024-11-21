@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './components/LandingPage';  // Import LandingPage
-import Register from './components/Register';  // Import Register component
-import Rules from './components/Rules';        // Import Rules component
+import LandingPage from './components/LandingPage'; // Import LandingPage
+import Register from './components/Register'; // Import Register component
+import Rules from './components/Rules'; // Import Rules component
 import './App.css';
 
 const App = () => {
-  // Track registration state
   const [isRegistered, setIsRegistered] = useState(false);
 
-  // Handle registration (set global state)
+  // Check if the user is registered from localStorage on initial load
+  useEffect(() => {
+    const registrationState = localStorage.getItem('isRegistered');
+    if (registrationState === 'true') {
+      setIsRegistered(true); // If user is registered, set isRegistered to true
+    }
+  }, []);
+
   const handleRegistration = () => {
     setIsRegistered(true);
+    localStorage.setItem('isRegistered', 'true');  // Store registration state in localStorage
   };
 
   return (
@@ -24,13 +31,19 @@ const App = () => {
           {/* Register page */}
           <Route
             path="/register"
-            element={isRegistered ? <Navigate to="/rules" /> : <Register onRegister={handleRegistration} />}
+            element={
+              isRegistered ? (
+                <Navigate to="/rules" /> // If registered, redirect to rules
+              ) : (
+                <Register onRegister={handleRegistration} />
+              )
+            }
           />
 
           {/* Rules page, only accessible if registered */}
           <Route
             path="/rules"
-            element={isRegistered ? <Rules /> : <Navigate to="/register" />}
+            element={isRegistered ? <Rules /> : <Navigate to="/register" />} // Only accessible if registered
           />
         </Routes>
       </div>
