@@ -26,7 +26,7 @@ const LandingPage = () => {
           </p>
         </div>
         <div style={{ marginTop: "25px" }}>
-          {/* Use Link instead of <a> */}
+          {/* Link to the /register page */}
           <Link to="/register" className="cta-btn">Get Started</Link>
         </div>
       </div>

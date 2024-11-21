@@ -2,93 +2,61 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
-const Register = () => {
-  const [teamNumber, setTeamNumber] = useState('');
-  const [password, setPassword] = useState('');
+const Register = ({ onRegister }) => {
+  const [teamStates, setTeamStates] = useState({});
   const [message, setMessage] = useState('');
-  const [isRegistered, setIsRegistered] = useState(false); // State to track registration
+  const [selectedTeam, setSelectedTeam] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  // Team credentials list
-  const teamCredentials = [
-    { teamNumber: 'Team 1', password: 'pass123' },
-    { teamNumber: 'Team 2', password: 'secure456' },
-    { teamNumber: 'Team 3', password: 'innovate789' },
-    { teamNumber: 'Team 4', password: 'create000' },
-    {teamNumber: 'Team 5', password: 'abcd2'},
-  ];
+  const teamCredentials = {
+    'Team 1': 'pass123',
+    'Team 2': 'secure456',
+    'Team 3': 'innovate789',
+    'Team 4': 'create000',
+  };
 
-  // Handle registration form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const team = teamCredentials.find(
-      (t) => t.teamNumber === teamNumber && t.password === password
-    );
-
-    if (team) {
-      setMessage('Registration successful!');
-      setIsRegistered(true); // Allow navigation to Rules
+  const handleRegister = () => {
+    if (teamCredentials[selectedTeam] === password) {
+      setTeamStates((prev) => ({ ...prev, [selectedTeam]: true }));
+      setMessage(`Registration successful for ${selectedTeam}!`);
+      onRegister();  // Update the global registration state in App.js
+      navigate('/rules');  // Automatically navigate to /rules after successful registration
     } else {
       setMessage('Invalid team number or password. Please try again.');
     }
-  };
-
-  // Handle View Event Rules navigation
-  const handleViewRules = () => {
-    if (isRegistered) {
-      navigate('/rules'); // Navigate to the Rules page
-    } else {
-      setMessage('Please register first to view the event rules.');
-    }
+    setSelectedTeam('');
+    setPassword('');
   };
 
   return (
     <div className="Register">
-      <div className="Register-content">
-        <h1>Register for Spark Tank</h1>
-        <form className="Register-form" onSubmit={handleSubmit}>
-          <label htmlFor="teamNumber">Team Number:</label>
-          <input
-            type="text"
-            id="teamNumber"
-            placeholder="Enter your team number"
-            value={teamNumber}
-            onChange={(e) => setTeamNumber(e.target.value)}
-          />
-
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button type="submit" className="register-btn">Register</button>
-        </form>
-        {message && <p className="message">{message}</p>}
-
-        <div className="navigation-buttons">
-          <button 
-            className={`cta-btn ${!isRegistered ? 'disabled' : ''}`} 
-            onClick={handleViewRules}
-          >
-            View Event Rules
-          </button>
-        </div>
-
-        <div className="team-box">
-          <h2>Team Numbers and Passwords</h2>
-          <ul>
-            {teamCredentials.map((team, index) => (
-              <li key={index}>
-                <strong>{team.teamNumber}</strong>: {team.password}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <h1>Register for Spark Tank</h1>
+      <div className="team-boxes">
+        {Object.keys(teamCredentials).map((team) => (
+          <div key={team} className="team-box">
+            <h2>{team}</h2>
+            <input
+              type="password"
+              placeholder="Enter password"
+              value={selectedTeam === team ? password : ''}
+              onChange={(e) => {
+                setSelectedTeam(team);
+                setPassword(e.target.value);
+              }}
+              disabled={!!teamStates[team]}  // Disable input if team is already registered
+            />
+            <button
+              className="register-btn"
+              onClick={handleRegister}
+              disabled={!!teamStates[team]}  // Disable button if team is already registered
+            >
+              {teamStates[team] ? 'Registered' : 'Register'}
+            </button>
+          </div>
+        ))}
       </div>
+      {message && <p className={message.includes('successful') ? 'success-message' : 'message'}>{message}</p>}
     </div>
   );
 };

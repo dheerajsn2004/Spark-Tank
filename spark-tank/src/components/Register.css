@@ -1,85 +1,125 @@
-body{
-  background-image: url("../images/finance.jpg");
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-image: url('../images/finance.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensures the background stays fixed */
 }
+
 .Register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: white;
-  }
-  
-  .Register-content {
-    background: rgba(21, 24, 66, 0.1);
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    width: 90%;
-    max-width: 600px;
-  }
-  
-  .Register-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .Register-form label {
-    margin: 10px 0 5px;
-    font-size: 1.2rem;
-  }
-  
-  .Register-form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .register-btn {
-    padding: 10px 20px;
-    background: #ffd700;
-    color: #1e3c72;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .register-btn:hover {
-    background: #ffea70;
-  }
-  
-  .message {
-    margin-top: 1rem;
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: bold;
-  }
-  
-  .team-box {
-    margin-top: 2rem;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    color: #ffd700;
-  }
-  
-  .team-box h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-  
-  .team-box ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .team-box li {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-    line-height: 1.4;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(21, 24, 66, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  width: 90%;
+  text-align: center;
+  margin: 3rem auto; /* Adds spacing when scrolling */
+}
+
+.Register h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #ffd700;
+}
+
+.team-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.team-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically centers the content */
+  align-items: center; /* Horizontally centers the content */
+  background: rgba(21, 24, 66, 0.6);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.team-box:hover {
+  transform: translateY(-5px);
+}
+
+.team-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ffd700;
+}
+
+.team-box input {
+  padding: 0.75rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.register-btn {
+  padding: 0.75rem 1.5rem;
+  background: #ffd700;
+  color: #1e3c72;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-btn:hover {
+  background: #ffea70;
+}
+
+.register-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+  color: #ff4500;
+}
+
+.success-message {
+  color: #32cd32;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.rules-btn {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #1e3c72; /* Deep blue */
+  color: #ffffff; /* White text */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.rules-btn:hover {
+  background: #35548f; /* Lighter blue on hover */
+  transform: translateY(-3px); /* Subtle upward animation */
+}
+
+.rules-btn:disabled {
+  background: #ccc; /* Gray color when disabled */
+  cursor: not-allowed; /* Disabled cursor style */
+}
