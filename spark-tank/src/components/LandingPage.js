@@ -8,7 +8,7 @@ const LandingPage = () => {
     <div
       className="LandingPage"
       style={{
-        backgroundImage: `linear-gradient(rgba(30, 60, 114, 0.6), rgba(30, 60, 114, 0.6)), url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(rgba(30, 60, 114, 0.3), rgba(30, 60, 114, 0.3)), url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

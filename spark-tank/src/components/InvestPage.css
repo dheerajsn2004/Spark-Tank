@@ -1,87 +1,120 @@
-.InvestPage {
-    background-color: #f4f7f9;
-    min-height: 100vh;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-  
-  .InvestPage-content {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    color: #2c3e50;
-  }
-  
-  .dropdown-container,
-  .input-container,
-  .purse-container {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    display: block;
-  }
-  
-  select,
-  input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  }
-  
-  button {
-    background-color: #27ae60;
-    color: #fff;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  button:hover {
-    background-color: #2ecc71;
-  }
-  
-  .message {
-    color: #e74c3c;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 20px;
-  }
-  
-  .company-status {
-    margin-top: 30px;
-  }
-  
-  .company-info {
-    background-color: #ecf0f1;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 4px;
-  }
-  
-  .company-info p {
-    font-size: 14px;
-    color: #7f8c8d;
-  }
-  
-  .company-info strong {
-    font-size: 16px;
-    color: #34495e;
-  }
-  
+.Invest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("../images/finance.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+}
+
+.Invest-content {
+  background: rgba(21, 24, 66, 0.8);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  max-width: 1000px;
+  width: 95%;
+  text-align: left;
+}
+
+.Invest-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.Invest-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ffd700; /* Gold */
+}
+
+.Invest-header p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.order-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.order-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #ffd700; /* Gold */
+}
+
+.order-section p {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.order-section input, .order-section select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: #f2f2f2;
+  color: #333;
+}
+
+.order-section input:focus, .order-section select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+.order-section .place-order-btn {
+  padding: 10px 20px;
+  background: #ffd700;
+  color: #1e3c72;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.order-section .place-order-btn:hover {
+  background: #ffea70;
+  box-shadow: 0 10px 25px rgba(255, 234, 112, 0.5);
+  transform: translateY(-5px);
+}
+
+.wallet-assets-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.wallet, .assets {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.wallet h2, .assets h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ffd700; /* Gold */
+}
+
+.wallet p, .assets p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}

@@ -1,93 +1,102 @@
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import './InvestPage.css';
 
 const InvestPage = () => {
-  // State variables
-  const [companies, setCompanies] = useState([
-    { name: 'Company A', value: 1000, sharesAvailable: 40 },
-    { name: 'Company B', value: 2000, sharesAvailable: 40 },
-    { name: 'Company C', value: 3000, sharesAvailable: 40 },
-    { name: 'Company D', value: 4000, sharesAvailable: 40 },
-  ]);
-  const [selectedCompany, setSelectedCompany] = useState('');
-  const [remainingPurse, setRemainingPurse] = useState(5000);
-  const [sharesToBuy, setSharesToBuy] = useState(0);
-  const [message, setMessage] = useState('');
+  const [teams, setTeams] = useState({
+    'Team 1': { wallet: 5000, sharesBought: {} },
+    'Team 2': { wallet: 5000, sharesBought: {} },
+    'Team 3': { wallet: 5000, sharesBought: {} },
+    'Team 4': { wallet: 5000, sharesBought: {} },
+  });
+  const [presentingTeam] = useState('Team 1');
+  const [selectedTeam, setSelectedTeam] = useState('');
+  const [percentage, setPercentage] = useState(0);
+  const [price, setPrice] = useState(0);
 
-  const handleInvest = () => {
-    const company = companies.find(c => c.name === selectedCompany);
-    const totalCost = company.value * sharesToBuy;
+  const handlePlaceOrder = () => {
+    const investingTeam = teams[presentingTeam];
+    const otherTeam = teams[selectedTeam];
 
-    if (sharesToBuy <= 0 || sharesToBuy > company.sharesAvailable) {
-      setMessage('Please enter a valid number of shares to purchase.');
-      return;
+    if (percentage > 0 && percentage <= 40 && price <= investingTeam.wallet) {
+      // Deduct from investing team's wallet
+      investingTeam.wallet -= price;
+
+      // Add to the presenting team's wallet
+      otherTeam.wallet += price;
+
+      // Update shares bought
+      const updatedShares = { ...investingTeam.sharesBought };
+      updatedShares[selectedTeam] = (updatedShares[selectedTeam] || 0) + percentage;
+      investingTeam.sharesBought = updatedShares;
+
+      // Update state
+      setTeams({
+        ...teams,
+        [presentingTeam]: investingTeam,
+        [selectedTeam]: otherTeam,
+      });
+
+      alert(`Successfully invested in ${selectedTeam}`);
+    } else {
+      alert('Invalid transaction. Ensure the percentage is within limits and you have sufficient funds.');
     }
 
-    if (totalCost > remainingPurse) {
-      setMessage('You do not have enough funds to make this purchase.');
-      return;
-    }
-
-    // Update remaining purse
-    setRemainingPurse(prev => prev - totalCost);
-
-    // Update company's share value
-    company.sharesAvailable -= sharesToBuy;
-    company.value += company.value * 0.05; // Increase value by 5% per transaction
-
-    setCompanies([...companies]);
-
-    setMessage(`Successfully purchased ${sharesToBuy} shares in ${company.name}.`);
+    setPercentage(0);
+    setPrice(0);
   };
 
   return (
     <div className="InvestPage">
-      <div className="InvestPage-content">
-        <h1>Invest in Companies</h1>
-        <div className="dropdown-container">
-          <label>Select Company:</label>
-          <select
-            value={selectedCompany}
-            onChange={(e) => setSelectedCompany(e.target.value)}
-          >
-            <option value="">Select a company</option>
-            {companies.map((company, index) => (
-              <option key={index} value={company.name}>
-                {company.name} - Rs. {company.value} per share
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="input-container">
-          <label>Enter number of shares to purchase:</label>
+      <h1>{presentingTeam}</h1>
+      <div className="order-section">
+        <h2>Place Your Order</h2>
+        <div>
+          <label>Percentage of Available Stocks:</label>
           <input
             type="number"
-            value={sharesToBuy}
-            onChange={(e) => setSharesToBuy(Number(e.target.value))}
+            value={percentage}
+            onChange={(e) => setPercentage(Number(e.target.value))}
+            max="40"
           />
         </div>
-
-        <div className="purse-container">
-          <p>Remaining Purse: Rs. {remainingPurse}</p>
+        <div>
+          <label>Select Team:</label>
+          <select
+            value={selectedTeam}
+            onChange={(e) => setSelectedTeam(e.target.value)}
+          >
+            <option value="" disabled>Select Team</option>
+            {Object.keys(teams)
+              .filter((team) => team !== presentingTeam)
+              .map((team) => (
+                <option key={team} value={team}>
+                  {team}
+                </option>
+              ))}
+          </select>
         </div>
-
-        <button className="invest-btn" onClick={handleInvest}>
-          Invest Now
-        </button>
-
-        {message && <p className="message">{message}</p>}
-
-        <div className="company-status">
-          <h2>Company Status</h2>
-          {companies.map((company, index) => (
-            <div key={index} className="company-info">
-              <p>
-                <strong>{company.name}</strong>: Rs. {company.value} per share, {company.sharesAvailable} shares available
-              </p>
-            </div>
-          ))}
+        <div>
+          <label>Price:</label>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+          />
         </div>
+        <button onClick={handlePlaceOrder}>Place Order</button>
+      </div>
+
+      <div className="wallet-section">
+        <h3>Your Wallet: ₹{teams[presentingTeam].wallet}</h3>
+      </div>
+
+      <div className="assets-section">
+        <h3>Your Assets:</h3>
+        {Object.entries(teams[presentingTeam].sharesBought).map(([team, shares]) => (
+          <p key={team}>
+            {team}: {shares}% shares
+          </p>
+        ))}
       </div>
     </div>
   );

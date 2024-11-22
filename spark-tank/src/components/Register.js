@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
 import './Register.css';
 
 const Register = ({ onRegister }) => {
-  const [teamStates, setTeamStates] = useState({});
-  const [message, setMessage] = useState('');
-  const [selectedTeam, setSelectedTeam] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const teamCredentials = {
     'Team 1': 'pass123',
@@ -16,49 +14,45 @@ const Register = ({ onRegister }) => {
   };
 
   const handleRegister = () => {
-    if (teamCredentials[selectedTeam] === password) {
-      setTeamStates((prev) => ({ ...prev, [selectedTeam]: true }));
-      setMessage(`Registration successful for ${selectedTeam}!`);
-      onRegister();  // Update registration state in App.js
+    if (teamCredentials[username] === password) {
+      setMessage(`Registration successful for ${username}!`);
+      onRegister(username); // Update registration state in App.js
     } else {
-      setMessage('Invalid team number or password. Please try again.');
+      setMessage('Invalid username or password. Please try again.');
     }
-    setSelectedTeam('');
+    setUsername('');
     setPassword('');
   };
 
   return (
     <div className="Register">
       <h1>Register for Spark Tank</h1>
-      
-      <div className="team-boxes">
-        {Object.keys(teamCredentials).map((team) => (
-          <div key={team} className="team-box">
-            <h2>{team}</h2>
-            <input
-              type="password"
-              placeholder="Enter password"
-              value={selectedTeam === team ? password : ''}
-              onChange={(e) => {
-                setSelectedTeam(team);
-                setPassword(e.target.value);
-              }}
-              disabled={!!teamStates[team]}  // Disable input if team is already registered
-            />
-            <button
-              className="register-btn"
-              onClick={handleRegister}
-              disabled={!!teamStates[team]}  // Disable button if team is already registered
-            >
-              {teamStates[team] ? 'Registered' : 'Register'}
-            </button>
-          </div>
-        ))}
+
+      <div className="register-box">
+        <label htmlFor="username">Team Username:</label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter your team username"
+        />
+
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
+        />
+
+        <button className="register-btn" onClick={handleRegister}>
+          Register
+        </button>
       </div>
+
       {message && <p className={message.includes('successful') ? 'success-message' : 'message'}>{message}</p>}
-      
-      {/* Allow navigation back to LandingPage */}
-      <Link to="/" className="back-link">Back to Landing Page</Link>
     </div>
   );
 };

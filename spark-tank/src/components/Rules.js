@@ -1,38 +1,35 @@
-import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom'; // Import Navigate for redirection
+import React from 'react';
+import { Link } from 'react-router-dom';  // Import Link for navigation
 import './Rules.css';
 
 const Rules = () => {
-  useEffect(() => {
-    const registrationState = localStorage.getItem('isRegistered');
-    if (registrationState !== 'true') {
-      // If not registered, redirect to register page
-      <Navigate to="/register" />;
-    }
-  }, []);
+  // Handler to prevent navigation
+  const handleClick = (e) => {
+    e.preventDefault(); // Prevents navigation
+  };
 
   return (
     <div className="Rules">
       <div className="Rules-content">
-        <h1>Event Rules</h1>
-        <p>
-          Welcome to the Spark Tank Event! Please read the following rules carefully to ensure a smooth and fair experience.
-        </p>
+        <h1>Rules for Spark Tank Event</h1>
+        <p>Here are the rules for participating in the Spark Tank event...</p>
+
+        {/* Rules list */}
         <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li>Each team gets 10 minutes to pitch their idea.</li>
+          <li>Investors can ask questions after each pitch.</li>
+          <li>The best ideas win amazing prizes!</li>
         </ul>
-        <p>Good luck, and may the best team win!</p>
-        
-        {/* Include Invest Now button */}
+
+        {/* Invest Now Button */}
         <div className="navigation-buttons">
-          <button className="cta-btn">Invest Now</button>
+          <Link
+            to="/invest"
+            className="cta-btn"
+            onClick={handleClick}  // Disable navigation
+          >
+            Invest Now
+          </Link>
         </div>
       </div>
     </div>
