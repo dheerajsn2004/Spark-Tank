@@ -1,120 +1,155 @@
-.Invest {
+/* Main InvestPage Styles */
+.InvestPage {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-image: url("../images/finance.jpg");
-  background-size: cover;
-  background-position: center;
-  color: white;
-  text-align: center;
-}
-
-.Invest-content {
-  background: rgba(21, 24, 66, 0.8);
-  padding: 2rem;
+  flex-direction: column;
+  align-items: center; /* Centers horizontally */
+  justify-content: center; /* Centers vertically */
+  font-family: Arial, sans-serif;
   border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  max-width: 1000px;
-  width: 95%;
-  text-align: left;
+  box-sizing: border-box;
+  width: 100%; /* Full width of the page */
+  height: 100vh; /* Full height of the viewport */
+  padding: 40px; /* Add padding for inner spacing */
+  margin: 0;
+  text-align: center; /* Center-align text inside the entire div */
 }
 
-.Invest-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* Presenting Team Heading */
+.presenting-team {
+  margin-bottom: 40px; /* Add spacing below the heading */
 }
 
-.Invest-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #ffd700; /* Gold */
-}
-
-.Invest-header p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.order-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.order-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #ffd700; /* Gold */
-}
-
-.order-section p {
-  font-size: 1.2rem;
-  margin-bottom: 0.8rem;
-  line-height: 1.5;
-}
-
-.order-section input, .order-section select {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  background: #f2f2f2;
-  color: #333;
-}
-
-.order-section input:focus, .order-section select:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
-}
-
-.order-section .place-order-btn {
-  padding: 10px 20px;
-  background: #ffd700;
-  color: #1e3c72;
-  text-decoration: none;
-  border-radius: 30px;
+.presenting-team h1 {
+  font-size: 42px; /* Increased font size */
+  color: #ffd700;
   font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: none;
 }
 
-.order-section .place-order-btn:hover {
-  background: #ffea70;
-  box-shadow: 0 10px 25px rgba(255, 234, 112, 0.5);
-  transform: translateY(-5px);
-}
-
-.wallet-assets-section {
+/* Main Content Layout */
+.content {
   display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  justify-content: center; /* Center contents horizontally */
+  align-items: flex-start; /* Align contents at the top */
+  gap: 60px; /* Space between sections */
+  width: 100%;
+  max-width: 1200px; /* Added max-width to prevent stretching too much */
 }
 
-.wallet, .assets {
+/* Left Section: Place Your Order */
+.place-order {
+  flex: 3;
+  background-color: rgba(21, 24, 66, 0.4);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  height: auto;
+  max-width: 700px; /* Center alignment balance */
+}
+
+.place-order h2 {
+  margin-bottom: 30px;
+  color: #ffd700;
+  font-size: 32px; /* Increased font size */
+}
+
+/* Align fields properly */
+.order-box .field {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align horizontally */
+  margin-bottom: 25px;
+  text-align: center;
+  width: 100%;
+}
+
+.order-box label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #ffd700;
+}
+
+.fixed-percentage,
+.value-box,
+.wallet-balance {
+  width: 80%; /* Slightly reduce width for better alignment */
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  font-size: 18px;
+  text-align: center; /* Center-align input text */
+}
+
+.dropdown {
+  width: 80%; /* Match width with other fields */
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+/* Place Order Button */
+.place-order-btn {
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+}
+
+.place-order-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Right Section: Wallet and Assets */
+.wallet-assets {
   flex: 1;
-  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align wallet and assets horizontally */
+  gap: 40px; /* Increased gap between wallet and assets */
+  max-width: 400px; /* Keep width proportional to .place-order */
 }
 
-.wallet h2, .assets h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #ffd700; /* Gold */
+.wallet,
+.assets {
+  background-color: rgba(21, 24, 66, 0.4);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center-align text within each section */
+  width: 100%; /* Adjust width for consistency */
 }
 
-.wallet p, .assets p {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+.wallet h3,
+.assets h3 {
+  margin-bottom: 20px;
+  color: #ffd700;
+  font-size: 22px;
+}
+
+.assets-box {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 15px;
+  min-height: 100px;
+  font-size: 18px;
+  text-align: center; /* Center-align asset text */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .place-order,
+  .wallet-assets {
+    width: 100%;
+  }
 }

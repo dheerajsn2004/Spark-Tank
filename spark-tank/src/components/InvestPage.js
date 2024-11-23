@@ -1,102 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './InvestPage.css';
 
-const InvestPage = () => {
-  const [teams, setTeams] = useState({
-    'Team 1': { wallet: 5000, sharesBought: {} },
-    'Team 2': { wallet: 5000, sharesBought: {} },
-    'Team 3': { wallet: 5000, sharesBought: {} },
-    'Team 4': { wallet: 5000, sharesBought: {} },
-  });
-  const [presentingTeam] = useState('Team 1');
-  const [selectedTeam, setSelectedTeam] = useState('');
-  const [percentage, setPercentage] = useState(0);
-  const [price, setPrice] = useState(0);
+const InvestPage = ({ registeredTeam }) => {
+  const [selectedPercentage, setSelectedPercentage] = useState(5);
+  const [equivalentValue, setEquivalentValue] = useState(0);
+  const walletBalance = 5000;
+
+  useEffect(() => {
+    setEquivalentValue((selectedPercentage / 100) * walletBalance); // Example calculation
+  }, [selectedPercentage]);
+
+  const handlePercentageChange = (e) => {
+    const percentage = parseInt(e.target.value, 10);
+    setSelectedPercentage(percentage);
+  };
 
   const handlePlaceOrder = () => {
-    const investingTeam = teams[presentingTeam];
-    const otherTeam = teams[selectedTeam];
-
-    if (percentage > 0 && percentage <= 40 && price <= investingTeam.wallet) {
-      // Deduct from investing team's wallet
-      investingTeam.wallet -= price;
-
-      // Add to the presenting team's wallet
-      otherTeam.wallet += price;
-
-      // Update shares bought
-      const updatedShares = { ...investingTeam.sharesBought };
-      updatedShares[selectedTeam] = (updatedShares[selectedTeam] || 0) + percentage;
-      investingTeam.sharesBought = updatedShares;
-
-      // Update state
-      setTeams({
-        ...teams,
-        [presentingTeam]: investingTeam,
-        [selectedTeam]: otherTeam,
-      });
-
-      alert(`Successfully invested in ${selectedTeam}`);
-    } else {
-      alert('Invalid transaction. Ensure the percentage is within limits and you have sufficient funds.');
-    }
-
-    setPercentage(0);
-    setPrice(0);
+    alert(`Order placed for ${selectedPercentage}% shares!`);
   };
 
   return (
     <div className="InvestPage">
-      <h1>{presentingTeam}</h1>
-      <div className="order-section">
-        <h2>Place Your Order</h2>
-        <div>
-          <label>Percentage of Available Stocks:</label>
-          <input
-            type="number"
-            value={percentage}
-            onChange={(e) => setPercentage(Number(e.target.value))}
-            max="40"
-          />
-        </div>
-        <div>
-          <label>Select Team:</label>
-          <select
-            value={selectedTeam}
-            onChange={(e) => setSelectedTeam(e.target.value)}
-          >
-            <option value="" disabled>Select Team</option>
-            {Object.keys(teams)
-              .filter((team) => team !== presentingTeam)
-              .map((team) => (
-                <option key={team} value={team}>
-                  {team}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <label>Price:</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
-        </div>
-        <button onClick={handlePlaceOrder}>Place Order</button>
+      <div className="presenting-team">
+        <h1>Presenting Team: {registeredTeam || 'Unknown'}</h1>
       </div>
 
-      <div className="wallet-section">
-        <h3>Your Wallet: ₹{teams[presentingTeam].wallet}</h3>
-      </div>
+      <div className="content">
+        <div className="place-order">
+          <h2>Place Your Order</h2>
+          <div className="order-box">
+            <div className="field">
+              <label>Percentage of Available Stocks:</label>
+              <input
+                className="fixed-percentage"
+                type="text"
+                value="40%"
+                readOnly
+              />
+            </div>
+            <div className="field">
+              <label>Select Percentage to Buy:</label>
+              <select
+                className="dropdown"
+                value={selectedPercentage}
+                onChange={handlePercentageChange}
+              >
+                {[5, 10, 15, 20, 25, 30, 35, 40].map((percent) => (
+                  <option key={percent} value={percent}>
+                    {percent}%
+                  </option>
+                ))}
+              </select>
+            </div>
 
-      <div className="assets-section">
-        <h3>Your Assets:</h3>
-        {Object.entries(teams[presentingTeam].sharesBought).map(([team, shares]) => (
-          <p key={team}>
-            {team}: {shares}% shares
-          </p>
-        ))}
+            <div className="field">
+              <label>Equivalent Value:</label>
+              <input
+                className="value-box"
+                type="text"
+                value={`₹${equivalentValue}`}
+                readOnly
+              />
+            </div>
+
+            <button className="place-order-btn" onClick={handlePlaceOrder}>
+              Place Order
+            </button>
+          </div>
+        </div>
+
+        <div className="wallet-assets">
+          <div className="wallet">
+            <h3>Your Wallet</h3>
+            <input
+              className="wallet-balance"
+              type="text"
+              value={`₹${walletBalance}`}
+              readOnly
+            />
+          </div>
+
+          <div className="assets">
+            <h3>Your Assets</h3>
+            <div className="assets-box"></div>
+          </div>
+        </div>
       </div>
     </div>
   );
