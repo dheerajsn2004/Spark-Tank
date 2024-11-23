@@ -13,27 +13,53 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const db_1 = __importDefault(require("./config/db")); // Import the MongoDB connection function
-dotenv_1.default.config(); // Load environment variables from .env file
+const teamRouter_1 = __importDefault(require("./routes/teamRouter"));
+const transactionRouter_1 = __importDefault(require("./routes/transactionRouter"));
+dotenv_1.default.config(); // Load environment variables
 const app = (0, express_1.default)();
-const PORT = process.env.PORT || 5000;
-// Initialize database and start the server
-(() => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        // Connect to MongoDB
-        yield (0, db_1.default)();
-        console.log('Connected to MongoDB');
-        // Middlewares
-        app.use((0, cors_1.default)());
-        app.use(express_1.default.json());
-        // Start the server
-        app.listen(PORT, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
-        });
+const port = 5000;
+// Middleware
+app.use(body_parser_1.default.json());
+// MongoDB Atlas connection URL from .env
+const dbURI = process.env.MONGO_URI;
+if (!dbURI) {
+    throw new Error('MONGO_URI is not defined in the environment variables.');
+}
+// Function to check and create collections if they don't exist
+const ensureCollectionsExist = () => __awaiter(void 0, void 0, void 0, function* () {
+    const db = mongoose_1.default.connection.db;
+    if (!db) {
+        throw new Error('Database connection is not initialized.');
     }
-    catch (error) {
-        console.error('Failed to connect to the database', error);
+    // Check and create 'teams' collection
+    const teamCollection = yield db.listCollections({ name: 'teams' }).next();
+    if (!teamCollection) {
+        console.log("Creating 'teams' collection...");
+        yield db.createCollection('teams');
+        console.log("'teams' collection created.");
     }
-}))();
+    // Check and create 'transactions' collection
+    const transactionCollection = yield db.listCollections({ name: 'transactions' }).next();
+    if (!transactionCollection) {
+        console.log("Creating 'transactions' collection...");
+        yield db.createCollection('transactions');
+        console.log("'transactions' collection created.");
+    }
+});
+// Connect to MongoDB Atlas
+mongoose_1.default.connect(dbURI)
+    .then(() => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('Connected to MongoDB Atlas');
+    yield ensureCollectionsExist(); // Ensure collections exist
+}))
+    .catch((err) => console.error('MongoDB connection error:', err));
+// Routes
+app.use('/teams', teamRouter_1.default);
+app.use('/transactions', transactionRouter_1.default);
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
