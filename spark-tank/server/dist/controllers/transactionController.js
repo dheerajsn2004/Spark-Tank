@@ -35,7 +35,7 @@ const buyShares = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         // Check if the selling team has too many shares
-        if (sellingTeam.availableShares >= 40) {
+        if ((sellingTeam.availableShares + sharesToBuy) > 40) {
             res.status(400).json({ message: "Selling team is out of stock (>= 40). Transaction can't happen." });
             return;
         }
@@ -72,12 +72,12 @@ const getTransactionLogsForTeam = (req, res) => __awaiter(void 0, void 0, void 0
     const teamId = req.params.id;
     try {
         const transactions = yield TransactionLog_1.default.find({
-            $or: [{ purchasingTeamId: teamId }, { sellingTeamId: teamId }],
+            $or: [{ purchasingTeamId: teamId }],
         });
         res.json(transactions);
     }
     catch (err) {
-        res.status(500).json({});
+        res.status(500).json({ err });
     }
 });
 exports.getTransactionLogsForTeam = getTransactionLogsForTeam;

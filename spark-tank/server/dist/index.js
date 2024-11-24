@@ -18,11 +18,13 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const teamRouter_1 = __importDefault(require("./routes/teamRouter"));
 const transactionRouter_1 = __importDefault(require("./routes/transactionRouter"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config(); // Load environment variables
 const app = (0, express_1.default)();
 const port = 5000;
 // Middleware
 app.use(body_parser_1.default.json());
+app.use((0, cors_1.default)());
 // MongoDB Atlas connection URL from .env
 const dbURI = process.env.MONGO_URI;
 if (!dbURI) {

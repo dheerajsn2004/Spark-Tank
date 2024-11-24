@@ -1,10 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import teamRouter from './routes/teamRouter';
 import transactionRouter from './routes/transactionRouter';
-
+import cors from 'cors';
 dotenv.config();  // Load environment variables
 
 const app = express();
@@ -12,6 +12,7 @@ const port = 5000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // MongoDB Atlas connection URL from .env
 const dbURI = process.env.MONGO_URI;

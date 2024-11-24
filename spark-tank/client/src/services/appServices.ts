@@ -35,25 +35,21 @@ interface TransactionLog {
 }
 
 // Function to fetch a team by ID
-export const fetchTeamById = (teamId: string) => {
-   axiosInstance.get<Team>(`/teams/${teamId}`);
-   return;
+export const fetchTeamById = (teamId: string): Promise<AxiosResponse<Team>> => {
+  return axiosInstance.get<Team>(`/teams/${teamId}`);
 };
 
 // Function to create a team
-export const createTeam = (teamData: { name: string; wallet: number; availableShares: number }) => {
-   axiosInstance.post<Team>('/teams', teamData);
-   return;
+export const createTeam = (teamData: { name: string; wallet: number; availableShares: number }): Promise<AxiosResponse<Team>> => {
+  return axiosInstance.post<Team>('/teams', teamData);
 };
 
 // Function to buy shares
-export const buyShares = (transactionData: TransactionData) => {
-   axiosInstance.post<TransactionLog>('/transactions/buy', transactionData);
-   return;
+export const buyShares = (transactionData: TransactionData): Promise<AxiosResponse<TransactionLog>> => {
+  return axiosInstance.post<TransactionLog>('/transactions/buy', transactionData);
 };
 
 // Function to fetch transaction logs for a team
-export const fetchTransactionLogsForTeam = (teamId: string) => {
-   axiosInstance.get<TransactionLog[]>(`/transactions/logs/${teamId}`);
-   return;
+export const fetchTransactionLogsForTeam = (teamId: string): Promise<AxiosResponse<TransactionLog[]>> => {
+  return axiosInstance.get<TransactionLog[]>(`/transactions/logs/${teamId}`);
 };

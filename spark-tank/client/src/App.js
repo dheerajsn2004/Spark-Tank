@@ -1,45 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
-import LandingPage from './components/LandingPage'; // Import LandingPage
-import Register from './components/Register'; // Import Register component
-import Rules from './components/Rules'; // Import Rules component
-import InvestPage from './components/InvestPage'; // Import InvestPage component
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import Register from './components/Register';
+import Rules from './components/Rules';
+import InvestPage from './components/InvestPage';
 import './App.css';
 
 const App = () => {
   const [isRegistered, setIsRegistered] = useState(false);
-  const [registeredTeam, setRegisteredTeam] = useState('');
+  const [username, setUsername] = useState(null);
+  const [userId, setUserId] = useState(null); // New state for userId
 
-  // Check if the user is registered from localStorage on initial load
+  // Load registration state and team info from localStorage on initial render
   useEffect(() => {
-    const registrationState = localStorage.getItem('isRegistered');
-    const team = localStorage.getItem('registeredTeam');
-    if (registrationState === 'true' && team) {
+    const registrationState = JSON.parse(localStorage.getItem('isRegistered'));
+    const username = JSON.parse(localStorage.getItem('loggedInUsername'));
+    const user = JSON.parse(localStorage.getItem('loggedInUserId')); // Retrieve logged-in user info
+    if (registrationState && username && user) {
       setIsRegistered(true);
-      setRegisteredTeam(team);
+      setUsername(username.username);
+      setUserId(user.userId); // Set userId from localStorage
     }
   }, []);
 
-  const handleRegistration = (team) => {
+  const handleRegistration = (username, userId) => {
     setIsRegistered(true);
-    setRegisteredTeam(team);
-    localStorage.setItem('isRegistered', 'true'); // Store registration state
-    localStorage.setItem('registeredTeam', team); // Store registered team
+    setUsername(username);
+    setUserId(userId); // Set the userId when registration is successful
+    localStorage.setItem('isRegistered', JSON.stringify(true));
+    localStorage.setItem('loggedInUsername', JSON.stringify(username));
   };
 
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* Landing Page is the default route */}
           <Route path="/" element={<LandingPage />} />
-
-          {/* Register page */}
           <Route
             path="/register"
             element={
@@ -50,32 +46,26 @@ const App = () => {
               )
             }
           />
-
-          {/* Rules page, only accessible if registered */}
           <Route
             path="/rules"
             element={
               isRegistered ? (
-                <Rules registeredTeam={registeredTeam} />
+                <Rules registeredTeam={username} />
               ) : (
                 <Navigate to="/register" replace />
               )
             }
           />
-
-          {/* Invest page, only accessible if registered */}
           <Route
             path="/invest"
             element={
               isRegistered ? (
-                <InvestPage registeredTeam={registeredTeam} />
+                <InvestPage registeredTeam={username} userId={userId} />
               ) : (
                 <Navigate to="/register" replace />
               )
             }
-          /> 
-
-          {/* Redirect any unknown routes to Landing Page */}
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
