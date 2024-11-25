@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Register.css';
+import logo from '../images/nisblogo.png';
+import ieeelogo from '../images/ieeelogo.png';
 
 const predefinedIds = [
   '67429a8de55771fcdbfc13df', '67429aebe55771fcdbfc13e1', 
@@ -64,7 +66,10 @@ const Register = ({ onRegister }) => {
   
 
   return (
+    
     <div className="Register">
+      <img src={logo} alt="NISB Logo" className="logo" />
+      <img src={ieeelogo} alt="IEEE Logo" className="ieeelogo" />
       <h1>Register for Spark Tank</h1>
       <div className="register-box">
         <label htmlFor="username">Team Username:</label>

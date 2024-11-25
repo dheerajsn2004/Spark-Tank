@@ -20,7 +20,7 @@
 }
 
 .presenting-team h1 {
-  font-size: 42px; /* Increased font size */
+  font-size: 3.5rem; /* Increased font size */
   color: #ffd700;
   font-weight: bold;
 }
@@ -38,11 +38,12 @@
 /* Left Section: Place Your Order */
 .place-order {
   flex: 3;
-  background-color: rgba(21, 24, 66, 0.4);
+  background-color: black;
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
   height: auto;
+  border: 2px solid wheat;
   max-width: 700px; /* Center alignment balance */
 }
 
@@ -117,7 +118,8 @@
 
 .wallet,
 .assets {
-  background-color: rgba(21, 24, 66, 0.4);
+  background-color: black;
+  border: 2px solid wheat;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
@@ -152,4 +154,21 @@
   .wallet-assets {
     width: 100%;
   }
+}
+.logo {
+  width: 7%;  /* Set width as a percentage of the container */
+  height: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 5%;        /* Adjust the distance from the top as a percentage */
+  left: 5%;       /* Adjust the distance from the left as a percentage */
+}
+
+.ieeelogo {
+  width: 9%;  /* Set width as a percentage of the container */
+  height: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 5%;      /* Adjust the distance from the top as a percentage */
+  right: 5%;    /* Adjust the distance from the right as a percentage */
 }

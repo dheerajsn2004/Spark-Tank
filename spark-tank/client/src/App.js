@@ -18,8 +18,8 @@ const App = () => {
     const user = JSON.parse(localStorage.getItem('loggedInUserId')); // Retrieve logged-in user info
     if (registrationState && username && user) {
       setIsRegistered(true);
-      setUsername(username.username);
-      setUserId(user.userId); // Set userId from localStorage
+      setUsername(username);
+      setUserId(user); // Set userId from localStorage
     }
   }, []);
 
@@ -29,13 +29,16 @@ const App = () => {
     setUserId(userId); // Set the userId when registration is successful
     localStorage.setItem('isRegistered', JSON.stringify(true));
     localStorage.setItem('loggedInUsername', JSON.stringify(username));
+    localStorage.setItem('loggedInUserId', JSON.stringify(userId)); // Store userId in localStorage
   };
 
   return (
     <Router>
-      <div className="App">
         <Routes>
+          {/* Landing Page Route */}
           <Route path="/" element={<LandingPage />} />
+
+          {/* Registration Route */}
           <Route
             path="/register"
             element={
@@ -46,6 +49,8 @@ const App = () => {
               )
             }
           />
+
+          {/* Rules Page Route */}
           <Route
             path="/rules"
             element={
@@ -56,6 +61,8 @@ const App = () => {
               )
             }
           />
+
+          {/* Invest Page Route */}
           <Route
             path="/invest"
             element={
@@ -66,9 +73,10 @@ const App = () => {
               )
             }
           />
+
+          {/* Fallback Route (catch-all) */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </div>
     </Router>
   );
 };

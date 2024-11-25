@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { buyShares, fetchTransactionLogsForTeam } from '../api/transactionServices';
-import { fetchTeamById } from '../api/teamServices'; // Assuming you have this API
+import { fetchTeamById } from '../api/teamServices';
 import './InvestPage.css';
+import logo from '../images/nisblogo.png';
+import ieeelogo from '../images/ieeelogo.png';
 
 const InvestPage = ({ registeredTeam, userId }) => {
   const [selectedTeam, setSelectedTeam] = useState('');
@@ -13,10 +15,11 @@ const InvestPage = ({ registeredTeam, userId }) => {
   const [remainingStocks, setRemainingStocks] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [backendError, setBackendError] = useState('');
+  const [purchasedTeams, setPurchasedTeams] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(''); // New state for success message
 
-  const value = 5000; // Assuming base value is fixed
+  const value = 5000;
 
-  // Fetch available shares using teamId
   const fetchRemainingStocks = async (teamId) => {
     try {
       const team = await fetchTeamById(teamId);
@@ -35,6 +38,7 @@ const InvestPage = ({ registeredTeam, userId }) => {
 
         const logs = await fetchTransactionLogsForTeam(userId);
         setTransactionLogs(logs || []);
+        setPurchasedTeams(logs.map((log) => log.sellingTeamId)); // Track purchased teams
 
         const allTeams = JSON.parse(localStorage.getItem('teams')) || {};
         const teamsArray = Object.keys(allTeams)
@@ -81,6 +85,8 @@ const InvestPage = ({ registeredTeam, userId }) => {
   const handlePlaceOrder = async () => {
     setErrorMessage('');
     setBackendError('');
+    setSuccessMessage(''); // Clear success message before new attempt
+
     if (!selectedTeam) {
       setErrorMessage('Please select a team to invest in.');
       return;
@@ -100,9 +106,25 @@ const InvestPage = ({ registeredTeam, userId }) => {
 
     try {
       await buyShares(transactionData);
-      alert(`Order placed for ${selectedPercentage}% shares in ${getTeamNameById(selectedTeam)}!`);
+
+      // Update wallet and transaction logs
+      const teamDetails = await fetchTeamById(userId);
+      setWalletBalance(teamDetails.wallet);
+
       const logs = await fetchTransactionLogsForTeam(userId);
       setTransactionLogs(logs || []);
+
+      // Add purchased team to the purchasedTeams list and remove it from dropdown
+      setPurchasedTeams((prev) => [...prev, selectedTeam]);
+      setSelectedTeam('');
+      setSelectedPercentage('');
+
+      // Set success message
+      const teamName = getTeamNameById(selectedTeam);
+      setSuccessMessage(`Successfully bought ${sharesToBuy}% shares in ${teamName}!`);
+
+      // Automatically hide the success message after 5 seconds
+      setTimeout(() => setSuccessMessage(''), 5000);
     } catch (error) {
       console.error('Error placing order:', error);
       setBackendError(error.response?.data?.message || 'An error occurred. Please try again.');
@@ -115,9 +137,13 @@ const InvestPage = ({ registeredTeam, userId }) => {
     return teamEntry ? teamEntry[0] : 'Unknown Team';
   };
 
+  const filteredTeams = availableTeams.filter((team) => !purchasedTeams.includes(team.id));
+
   return (
     <div className="InvestPage">
       <div className="presenting-team">
+      <img src={logo} alt="NISB Logo" className="logo" />
+      <img src={ieeelogo} alt="IEEE Logo" className="ieeelogo" />
         <h1>Investing Team: {registeredTeam || 'Unknown'}</h1>
       </div>
       <div className="content">
@@ -132,7 +158,7 @@ const InvestPage = ({ registeredTeam, userId }) => {
                 onChange={(e) => setSelectedTeam(e.target.value)}
               >
                 <option value="">Select Team</option>
-                {availableTeams.map((team) => (
+                {filteredTeams.map((team) => (
                   <option key={team.id} value={team.id}>
                     {team.name}
                   </option>
@@ -171,6 +197,7 @@ const InvestPage = ({ registeredTeam, userId }) => {
             </button>
             {errorMessage && <p className="error">{errorMessage}</p>}
             {backendError && <p className="error">{backendError}</p>}
+            {successMessage && <p className="success">{successMessage}</p>}
           </div>
         </div>
         <div className="wallet-assets">
@@ -183,7 +210,16 @@ const InvestPage = ({ registeredTeam, userId }) => {
               readOnly
             />
           </div>
-          <div className="transaction-logs">
+          <div className="transaction-logs" style={{
+            fontSize:"1.5rem",
+            border:"2px solid wheat",
+            padding:"10px 30px",
+            borderRadius:"10px",
+            backgroundColor:"black",
+            maxHeight:"400px",
+            overflowY:"scroll",
+            width:"250px"
+          }}>
             <h3>Transaction History</h3>
             {transactionLogs.length > 0 ? (
               <div className="logs-box">
